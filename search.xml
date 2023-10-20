@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>java日期类</title>
+      <link href="/liyu1989.github.io/post/9521.html"/>
+      <url>/liyu1989.github.io/post/9521.html</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义日期格式</span></span><br><span class="line"> <span class="type">DateTimeFormatter</span> <span class="variable">dateTimeFormatter</span> <span class="operator">=</span> DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy-MM-dd&quot;</span>);<span class="comment">//yd小写，M大写</span></span><br><span class="line"><span class="comment">//解析日期，转为日期类</span></span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date_1</span> <span class="operator">=</span> LocalDate.parse(s1);</span><br><span class="line"><span class="comment">//text - 要解析的文本，如“2007-12-03”，不为空</span></span><br><span class="line"><span class="comment">//方法</span></span><br><span class="line">isLeapYear()<span class="comment">//闰年</span></span><br><span class="line"> getDayOfYear()</span><br><span class="line">getDayOfMonth();</span><br><span class="line">getDayOfWeek()</span><br><span class="line">    s2_year_2.compareTo(s2_year_1);<span class="comment">//将此日期与另一个日期进行比较。 </span></span><br><span class="line"><span class="comment">//比较主要是从最早到最晚的日期。</span></span><br><span class="line"><span class="comment">//ChronoUnit 是 Java 编程语言中 java.time.temporal 包下的一个枚举类型。它用于表示时间的单元，例如年、月、日、小时、分钟、秒等。ChronoUnit 枚举提供了一系列的常量，每个常量表示一种时间单元。通过使用 ChronoUnit，你可以在处理日期和时间时更容易地执行各种操作，例如计算两个日期之间的差异，添加或减去指定的时间单元等。</span></span><br><span class="line"><span class="comment">//粗略的计算</span></span><br><span class="line"><span class="type">long</span> <span class="variable">monthbetween</span> <span class="operator">=</span> ChronoUnit.MONTHS.between(s1, s2);<span class="comment">//相隔多少个月</span></span><br><span class="line"><span class="type">long</span> <span class="variable">yearbetween</span> <span class="operator">=</span> ChronoUnit.YEARS.between(s2_year_1, s2_year_2);</span><br><span class="line"><span class="comment">//但LocateDate有现成的方法getMonthValue()</span></span><br><span class="line">getMonthValue()</span><br><span class="line">    getYear()</span><br></pre></td></tr></table></figure><p><a href="https://blog.csdn.net/qq_44749491/article/details/130123065">Java8日期类LocalDate、LocalTime、LocalDateTime使用详解_流水武qin的博客-CSDN博客</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> java pta题总结 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Sat Oct 14 2023 08:00:00 GMT+0800 (中国标准时间)</title>
       <link href="/liyu1989.github.io/post/48798.html"/>
       <url>/liyu1989.github.io/post/48798.html</url>
