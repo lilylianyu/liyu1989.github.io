@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>ssmB站黑马学习笔记 | 羽霉</title><meta name="author" content="霉"><meta name="copyright" content="霉"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ioc不自己new 创建 由外部提供 控制反转 {width&#x3D;”5.75in” height&#x3D;”2.90625in”} 把对象放在ioc容器 DI 能绑定依赖 Service是业务层，Dao是数据访问层 bean 默认为单例 {width&#x3D;”5.4375in” height&#x3D;”2.370138888888889in”} alt+7：查看类中所有方法 sett">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssmB站黑马学习笔记">
+<meta property="og:url" content="https://lilylianyu.github.io/liyu1989.github.io/post/1.html">
+<meta property="og:site_name" content="羽霉">
+<meta property="og:description" content="ioc不自己new 创建 由外部提供 控制反转 {width&#x3D;”5.75in” height&#x3D;”2.90625in”} 把对象放在ioc容器 DI 能绑定依赖 Service是业务层，Dao是数据访问层 bean 默认为单例 {width&#x3D;”5.4375in” height&#x3D;”2.370138888888889in”} alt+7：查看类中所有方法 sett">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lilylianyu.github.io/liyu1989.github.io/img/facivon.png">
+<meta property="article:published_time" content="2024-04-28T13:09:39.075Z">
+<meta property="article:modified_time" content="2024-04-28T13:17:26.933Z">
+<meta property="article:author" content="霉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lilylianyu.github.io/liyu1989.github.io/img/facivon.png"><link rel="shortcut icon" href="/liyu1989.github.io/img/facivon.png"><link rel="canonical" href="https://lilylianyu.github.io/liyu1989.github.io/post/1.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/liyu1989.github.io/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/liyu1989.github.io/',
+  algolia: undefined,
+  localSearch: {"path":"/liyu1989.github.io/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ssmB站黑马学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-28 21:17:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/universe.css">
+<link rel="stylesheet" href="/css/font.css"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-clock/lib/clock.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/liyu1989.github.io/img/facivon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/liyu1989.github.io/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/liyu1989.github.io/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/liyu1989.github.io/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/liyu1989.github.io/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/liyu1989.github.io/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li><li><a class="site-page child" href="https://lilylianyu.github.io/christmas/"><span> 圣诞树</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/liyu1989.github.io/" title="羽霉"><span class="site-name">羽霉</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/liyu1989.github.io/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/liyu1989.github.io/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/liyu1989.github.io/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li><li><a class="site-page child" href="https://lilylianyu.github.io/christmas/"><span> 圣诞树</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/liyu1989.github.io/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ssmB站黑马学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-28T13:09:39.075Z" title="发表于 2024-04-28 21:09:39">2024-04-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-28T13:17:26.933Z" title="更新于 2024-04-28 21:17:26">2024-04-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ssmB站黑马学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>ioc不自己new 创建 由外部提供 控制反转</p>
+<p><img src="/liyu1989.github.io/./media/image1.png">{width&#x3D;”5.75in” height&#x3D;”2.90625in”}</p>
+<p>把对象放在ioc容器</p>
+<p>DI 能绑定依赖</p>
+<p>Service是业务层，Dao是数据访问层</p>
+<p>bean 默认为单例</p>
+<p><img src="/liyu1989.github.io/./media/image2.png">{width&#x3D;”5.4375in” height&#x3D;”2.370138888888889in”}</p>
+<p>alt+7：查看类中所有方法</p>
+<p>setter 注入 要改配置文件</p>
+<h4 id="依赖自动注入"><a href="#依赖自动注入" class="headerlink" title="依赖自动注入"></a>依赖自动注入</h4><p>按名称自动装配@Repository(&quot;bookDao2&quot;) 不用</p>
+<p>service 里面写 @Autowired</p>
+<p>@Qualifier(&quot;bookDao&quot;) 指定加载变量</p>
+<p>@Value(&quot;${name}&quot;) 简单类型注入 注入name 变量</p>
+<p>name属性在配置文件里面写了</p>
+<p>name&#x3D;itheima888 在Config里面 @PropertySource({&quot;jdbc.properties&quot;})<br>加载外部文件</p>
+<p>&#x2F;</p>
+<p><img src="/liyu1989.github.io/./media/image3.png">{width&#x3D;”5.767361111111111in”<br>height&#x3D;”2.2263888888888888in”}</p>
+<p><img src="/liyu1989.github.io/./media/image4.png">{width&#x3D;”5.756944444444445in”<br>height&#x3D;”2.270138888888889in”}</p>
+<p>构造器注入看的是形参名 配置写形参名</p>
+<p>spring 自动装配</p>
+<p>实现类还是要写setter方法</p>
+<p>带&lt;pro标签就是自己写setter</p>
+<p>autowire&#x3D;&quot;byType&quot; 按 类型装配</p>
+<p>注入集合</p>
+<p><img src="/liyu1989.github.io/./media/image5.png">{width&#x3D;”4.677083333333333in”<br>height&#x3D;”2.0520833333333335in”}</p>
+<p>点进去快捷键：Ctrl加鼠标单击或鼠标滚轮键或鼠标单击再Ctrl加B；查看所有方法：Ctrl加F12，部分电脑要按住Fn键</p>
+<p>加载properties文件</p>
+<p><img src="/liyu1989.github.io/./media/image6.png">{width&#x3D;”5.766666666666667in”<br>height&#x3D;”3.102777777777778in”}</p>
+<p>中文乱码的设这个：file-encoding&#x3D;&quot;utf-8&quot;</p>
+<p>location&#x3D;&quot;classpath*:*.properties&quot;</p>
+<p><img src="/liyu1989.github.io/./media/image7.png">{width&#x3D;”5.7659722222222225in”<br>height&#x3D;”2.3673611111111112in”}</p>
+<p>创建容器 new ClassPathXmlApplicationContext</p>
+<p>ApplicationContext 初始化的bean 是立即加载</p>
+<p><img src="/liyu1989.github.io/./media/image8.png">{width&#x3D;”5.768055555555556in” height&#x3D;”1.98125in”}</p>
+<p>快捷键 光标定在类上，ctrl+h</p>
+<p><img src="/liyu1989.github.io/./media/image9.png">{width&#x3D;”5.761805555555555in”<br>height&#x3D;”2.1534722222222222in”}</p>
+<p>立即加载不就是饿汉模式，延时加载不就是懒汉模式</p>
+<p><img src="/liyu1989.github.io/./media/image10.png">{width&#x3D;”5.761805555555555in”<br>height&#x3D;”1.8965277777777778in”}</p>
+<p>bean配置写法</p>
+<p><img src="/liyu1989.github.io/./media/image11.png">{width&#x3D;”5.7625in” height&#x3D;”2.647222222222222in”}</p>
+<p><img src="/liyu1989.github.io/./media/image12.png">{width&#x3D;”5.761111111111111in”<br>height&#x3D;”2.6284722222222223in”}ssm，zookeeper、dubbo、rabbitqueue、rocket<br>queue、security、redis</p>
+<p>依赖注入</p>
+<p>@Component定义bean</p>
+<p>&#x2F;&#x2F;@Component定义bean</p>
+<p>&#x2F;&#x2F;@Component</p>
+<p>@Component衍生注解</p>
+<p>1.&#x2F;&#x2F;@Service： 业务层service</p>
+<p>2.&#x2F;&#x2F;@Repository： 数据层data</p>
+<p>纯注解</p>
+<p><img src="/liyu1989.github.io/./media/image13.png">{width&#x3D;”5.6722222222222225in”<br>height&#x3D;”2.5104166666666665in”}</p>
+<p>Annotation</p>
+<p>没有注解的去Maven仓库搜索annotatioin的依赖加入pom文件</p>
+<p>引依赖爆红</p>
+<p>没这个的打上包名alt enter 里面有个add Maven的 加了就行了</p>
+<p>alt enter 可以直接导依赖</p>
+<p>默认情况下Spring是单例，非单例的话，Spring就不会再管bean的生命周期了</p>
+<p>在非单例模式下，每次请求都会创建一个新的对象实例，这些对象的生命周期不同，不同请求之间没有关联。因此，非单例对象通常不能在销毁时机上做出一致的假设，因为不同对象的生命周期是独立的。</p>
+<p>默认情况下Spring是单例，非单例的话，Spring就不会再管bean的生命周期了</p>
+<p>&#x2F;&#x2F;@Import:导入配置信息</p>
+<p>@Import({JdbcConfig.class})</p>
+<p>配置第三方bean</p>
+<p><img src="/liyu1989.github.io/./media/image14.png">{width&#x3D;”5.7347222222222225in” height&#x3D;”2.8125in”}</p>
+<p>写好了第三放bean 用Import导入</p>
+<p><img src="/liyu1989.github.io/./media/image15.png">{width&#x3D;”5.7625in” height&#x3D;”2.785416666666667in”}</p>
+<p>@Value(&quot;com.mysql.jdbc.Driver&quot;)</p>
+<p>private String driver;</p>
+<p>@Value(&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;spring_db&quot;)</p>
+<p>private String url; url的值就确定了<br>jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;spring_db</p>
+<p>配置类加上@ComponentScan(&quot;com.itheima&quot;) 能自动扫描 装配数据层的对象</p>
+<p>xml配置与注解对比</p>
+<p><img src="/liyu1989.github.io/./media/image16.png">{width&#x3D;”5.364583333333333in”<br>height&#x3D;”2.6979166666666665in”}</p>
+<p>BV1MT4y1k7wZ可以学mybatis</p>
+<p>mybatis还没学完 先跳三集</p>
+<p><img src="/liyu1989.github.io/./media/image17.png">{width&#x3D;”1.9743055555555555in”<br>height&#x3D;”0.6201388888888889in”}</p>
+<p>整合mybatis</p>
+<p>Springconfig里面</p>
+<ol>
+<li><p>@Configuration</p>
+</li>
+<li><p>@ComponentScan(&quot;com.itheima&quot;)</p>
+</li>
+<li><p>@PropertySource(&quot;classpath:jdbc.properties&quot;)</p>
+</li>
+<li><p>@Import({JdbcConfig.class,MybatisConfig.class})</p>
+<p>快捷键 连按两次 shift 启动全局搜索</p>
+<p>整合Junnit</p>
+<p>在SrviceText里面</p>
+<p>@RunWith(SpringJUnit4ClassRunner.class)</p>
+<p>@ContextConfiguration(classes &#x3D; SpringConfig.class)</p>
+</li>
+</ol>
+<h4 id="Aop-在不惊动原始设计的基础上为其进行功能增强"><a href="#Aop-在不惊动原始设计的基础上为其进行功能增强" class="headerlink" title="Aop 在不惊动原始设计的基础上为其进行功能增强"></a>Aop 在不惊动原始设计的基础上为其进行功能增强</h4><p>aop 详解</p>
+<p><img src="/liyu1989.github.io/./media/image18.png">{width&#x3D;”5.763888888888889in”<br>height&#x3D;”3.0319444444444446in”}</p>
+<p><img src="/liyu1989.github.io/./media/image19.png">{width&#x3D;”5.739583333333333in”<br>height&#x3D;”2.9583333333333335in”}</p>
+<p>设置切入点 在mydavice里面</p>
+<p>@Component</p>
+<p>&#x2F;&#x2F;设置当前类为切面类类</p>
+<p>@Aspec</p>
+<p>@Pointcut(&quot;execution(void com.itheima.dao.BookDao.update())&quot;)<br>切入点表达式</p>
+<p>&#x2F;&#x2F;开启注解开发AOP功能 在Sprinngconfig里面</p>
+<p>@EnableAspectJAutoProxy</p>
+<p>初始化化Bean时要 判定是否匹配了切入点</p>
+<p>使用通配符描述切入点 使匹配多个切入点</p>
+<p><img src="/liyu1989.github.io/./media/image20.png">{width&#x3D;”5.6618055555555555in”<br>height&#x3D;”2.78125in”}</p>
+<p>* 任意但至少一个</p>
+<p>业务层service 数据层repository 表现层controller</p>
+<p>aop 书写规范技巧</p>
+<p><img src="/liyu1989.github.io/./media/image21.png">{width&#x3D;”5.761111111111111in”<br>height&#x3D;”2.433333333333333in”} 环绕 前后都有</p>
+<p>用环绕 要加 Pro</p>
+<p><img src="/liyu1989.github.io/./media/image22.png">{width&#x3D;”5.766666666666667in” height&#x3D;”2.39375in”}</p>
+<p>执行万次案例</p>
+<p>@Pointcut(&quot;execution(* com.itheima.service.*Service.*(..))&quot;)</p>
+<p>private void servicePt(){}</p>
+<p>aop 获取参数</p>
+<p><img src="/liyu1989.github.io/./media/image23.png">{width&#x3D;”5.764583333333333in”<br>height&#x3D;”3.066666666666667in”}</p>
+<p>afterReturning(JoinPoint jp,String ret) JoinPoin 参数写前面</p>
+<p>百度网盘校验密码</p>
+<p>coonfig里面@EnableAspectJAutoProxy</p>
+<p>advice里面</p>
+<p>@Component</p>
+<p>@Aspect</p>
+<p><img src="/liyu1989.github.io/./media/image24.png">{width&#x3D;”5.767361111111111in”<br>height&#x3D;”3.436111111111111in”}</p>
+<p>一到连数据库jdbc就报错</p>
+<p>com.alibaba.druid.support.logging.JakartaCommonsLoggingImpl info</p>
+<p>可以看一下报错内容，可能是数据库密码或者数据库名称写错了，也可能查询语句有问题，也有可能是配置文件中driver写错了（如果数据库版本是5.x的不加cj，6.x以后的都加cj）</p>
+<p>数据库名称改了解决了???</p>
+<p>jdbc.driver&#x3D;com.mysql.jdbc.Driver</p>
+<p>jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;spring_db?useSSL&#x3D;false</p>
+<p>jdbc.username&#x3D;root</p>
+<p>jdbc.password&#x3D;hsp</p>
+<p>开启事务 写在接口上</p>
+<p>在 springcnfig里面&#x2F;&#x2F;开启注解式事务驱动</p>
+<p>@EnableTransactionManagement</p>
+<p>@Transactional(rollbackFor &#x3D; IOException.class)<br>有些异常默认并不参与回滚，加上 (rollbackFor &#x3D; IOException.class</p>
+<p>lic interface LogService {</p>
+<p>&#x2F;&#x2F;propagation设置事务属性：传播行为设置为当前操作需要新事务</p>
+<p>@Transactional(propagation &#x3D; Propagation.REQUIRES[_NEW]{.mark})</p>
+<p>事务传播方式 <img src="/liyu1989.github.io/./media/image25.png">{width&#x3D;”5.447916666666667in”<br>height&#x3D;”2.5368055555555555in”}</p>
+<p>SpringMvc 做表现层开发 属于 web开发</p>
+<p>报错 No plugin found for prefix &#39;tomcat7&#39; in the current project and<br>in the plugin groups</p>
+<p>但是toomcat7依赖是写了的</p>
+<p>&lt;plugins&gt;</p>
+<p>&lt;plugin&gt;</p>
+<p>&lt;!-- 加载tomcat插件--&gt;</p>
+<p>&lt;groupId&gt;org.apache.tomcat.maven&lt;&#x2F;groupId&gt;</p>
+<p>&lt;artifactId&gt;tomcat7-maven-plugin&lt;&#x2F;artifactId&gt;</p>
+<p>&lt;version&gt;2.1&lt;&#x2F;version&gt;</p>
+<p>&lt;configuration&gt;</p>
+<p>&lt;port&gt;80&lt;&#x2F;port&gt;</p>
+<p>&lt;path&gt;&#x2F;&lt;&#x2F;path&gt;</p>
+<p>&lt;&#x2F;configuration&gt;</p>
+<p>&lt;&#x2F;plugin&gt;</p>
+<p>&lt;&#x2F;plugins&gt;</p>
+<p>&lt;&#x2F;build&gt;</p>
+<p>报错 Java：不支持发行版本5 将项目结构中的jdk改为1.8</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/springmvcDemo/save">http://localhost:8080/springmvcDemo/save</a> 不行的兄弟们这样试一下</p>
+<p>get 和post请求</p>
+<p>没有main 它怎么启动的？ tomca7????</p>
+<p>【Java】IDEA如何运行web程序</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pretty-sunshine/p/9896428.html">https://www.cnblogs.com/pretty-sunshine/p/9896428.html</a></p>
+<p>mvc还是先把java web看完吧 Idea根本连不上tomcatt</p>
+<p>idea 里面连不了本地tomcat</p>
+<p>不能部署t7是因为maven版本过高，降低maven版本就行</p>
+<p>get请求</p>
+<p><img src="/liyu1989.github.io/./media/image26.png">{width&#x3D;”5.766666666666667in”<br>height&#x3D;”3.004861111111111in”}</p>
+<p>post 请求<img src="/liyu1989.github.io/./media/image27.png">{width&#x3D;”5.759722222222222in”<br>height&#x3D;”2.7006944444444443in”}</p>
+<p>post传中文乱码</p>
+<p>&#x2F;&#x2F;乱码处理</p>
+<p>@Override</p>
+<p>protected Filter[] getServletFilters() {</p>
+<p>CharacterEncodingFilter filter &#x3D; new CharacterEncodingFilter();</p>
+<p>filter.setEncoding(&quot;UTF-8&quot;);</p>
+<p>return new Filter[]{filter};</p>
+<p>}</p>
+<p>Json</p>
+<p>&lt;dependency&gt;</p>
+<p>&lt;groupId&gt;com.fasterxml.jackson.core&lt;&#x2F;groupId&gt;</p>
+<p>&lt;artifactId&gt;jackson-databind&lt;&#x2F;artifactId&gt;</p>
+<p>&lt;version&gt;2.9.0&lt;&#x2F;version&gt;</p>
+<p>&lt;&#x2F;dependency&gt;</p>
+<p>MVC部分先大概看看，没有main,我不知道怎么启动tmcat idea 里面连不上</p>
+<p>rest 三个注解接收传参</p>
+<p><img src="/liyu1989.github.io/./media/image28.png">{width&#x3D;”5.739583333333333in” height&#x3D;”2.65625in”}</p>
+<p>@RestController<br>&#x2F;&#x2F;使用@RestController注解替换@Controller与@ResponseBody注解，简化书写</p>
+<p>ssm整合</p>
+<p>先dao 再 srvice 再 controller</p>
+<p>private BookDao bookDao; 爆红 ： alt+enter没有Autowiring的，把 Incorrect<br>injection point autowiring in Spring bean components去掉<br>要是还爆红就重启IDEA</p>
+<p>测试工作 业务层 service用 JUnitt 做测试工作</p>
+<p>BooookSercieText @RunWith(SpringJUnit4ClassRunner.class) 指定JUnit</p>
+<p>@ContextConfiguration(classes &#x3D; SpringConfig.class) 写配置类<br>SpringConfig.class 属性 claass</p>
+<p>@Autowired</p>
+<p>private BookService bookService; 自动装配</p>
+<p>测试@Test</p>
+<p>public void testGetAll(){</p>
+<p>List&lt;Book&gt; all &#x3D; bookService.getAll();</p>
+<p>System.out.println(all);</p>
+<p>}</p>
+<p>表现层controller 用postman做测试</p>
+<p>到这里 除了前面用的 SpringMvc的postman那个，连tocat连不上 到这里测试<br>service 没问题</p>
+<p>启动web服务搞好了 是要在 edit 里面指定tomcat 安装目录</p>
+<p>地址写成<a target="_blank" rel="noopener" href="http://localhost:8080/http://localhost:8080/springmvc_08_ssm_war_exploded2/books/1/books/1">http://localhost:8080/http://localhost:8080/springmvc_08_ssm_war_exploded2/books/1/books/1</a><br>就查询成功了，应该和我配置的地址有关，地址要加上<a target="_blank" rel="noopener" href="http://localhost:8080/[springmvc_08_ssm_war_exploded2]%7B.mark%7D/books/1">http://localhost:8080/[springmvc_08_ssm_war_exploded2]{.mark}/books/1</a></p>
+<p>整合MYbatis</p>
+<p><img src="/liyu1989.github.io/./media/image29.png">{width&#x3D;”5.7659722222222225in”<br>height&#x3D;”3.2159722222222222in”}</p>
+<p><img src="/liyu1989.github.io/./media/image30.png">{width&#x3D;”5.7625in” height&#x3D;”3.0805555555555557in”}</p>
+<p>整合SpringMVc</p>
+<p><img src="/liyu1989.github.io/./media/image31.png">{width&#x3D;”5.763888888888889in”<br>height&#x3D;”2.7180555555555554in”}</p>
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p><img src="/liyu1989.github.io/./media/image32.png">{width&#x3D;”5.766666666666667in”<br>height&#x3D;”1.7236111111111112in”}</p>
+<p>将异常全部抛出到表现层 controller</p>
+<p>定aop 切点 切面</p>
+<p>异常处理器</p>
+<p><img src="/liyu1989.github.io/./media/image33.png">{width&#x3D;”5.758333333333334in”<br>height&#x3D;”1.5118055555555556in”}</p>
+<p>异常处理器注解</p>
+<p><img src="/liyu1989.github.io/./media/image34.png">{width&#x3D;”5.53125in” height&#x3D;”2.995138888888889in”}</p>
+<p><img src="/liyu1989.github.io/./media/image35.png">{width&#x3D;”5.526388888888889in”<br>height&#x3D;”2.797222222222222in”}</p>
+<p>自定义异常</p>
+<p><img src="/liyu1989.github.io/./media/image36.png">{width&#x3D;”4.083333333333333in”<br>height&#x3D;”2.3020833333333335in”}</p>
+<p>页面新增不行 我的地址是</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/springmvc_11_page_war_exploded/pages/books.html">http://localhost:8080/springmvc_11_page_war_exploded/pages/books.html</a></p>
+<p>上课做的</p>
+<p><img src="/liyu1989.github.io/./media/image37.png">{width&#x3D;”5.75625in”<br>height&#x3D;”1.0930555555555554in”}</p>
+<p>而GET <a target="_blank" rel="noopener" href="http://localhost:8080/books">http://localhost:8080/books</a> 404 (Not Found)这个<br>url是打不开的，所以新增无效</p>
+<p>需要改html代码，使请求地址一样</p>
+<p>vue页面代码听得一塌糊涂</p>
+<p>之后再去学java web</p>
+<p>页面增删改查</p>
+<p><img src="/liyu1989.github.io/./media/image38.png">{width&#x3D;”5.5680555555555555in”<br>height&#x3D;”1.90625in”}</p>
+<p>需要改地址</p>
+<h4 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h4><p>在表现层 cotroller interceptor</p>
+<p><img src="/liyu1989.github.io/./media/image39.png">{width&#x3D;”5.614583333333333in” height&#x3D;”2.90625in”}</p>
+<p><img src="/liyu1989.github.io/./media/image40.png">{width&#x3D;”5.7625in” height&#x3D;”2.18125in”}</p>
+<p><img src="/liyu1989.github.io/./media/image41.png">{width&#x3D;”5.763194444444444in”<br>height&#x3D;”2.470138888888889in”}</p>
+<p><img src="/liyu1989.github.io/./media/image42.png">{width&#x3D;”5.764583333333333in”<br>height&#x3D;”2.688888888888889in”}</p>
+<p>拦截器执行流程</p>
+<p><img src="/liyu1989.github.io/./media/image43.png">{width&#x3D;”5.7652777777777775in”<br>height&#x3D;”2.595833333333333in”}</p>
+<p>多拦截器 执行顺序</p>
+<p><img src="/liyu1989.github.io/./media/image44.png">{width&#x3D;”5.763194444444444in”<br>height&#x3D;”2.9944444444444445in”}</p>
+<p>这里maven是高级 先跳过 也就是p75-p89</p>
+<p><img src="/liyu1989.github.io/./media/image45.png">{width&#x3D;”1.5993055555555555in” height&#x3D;”1.375in”}</p>
+<p>而 springboot 也前面过了一下 那个6小时的</p>
+<p>也先跳 p990-p104</p>
+<p>至于后面的Mybatis Plus 那就先吧Mybatis 先学了</p>
+<p>所以这个Ssm先到这里</p>
+<p>转mybatis</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1MT4y1k7wZ?p=1">https://www.bilibili.com/video/BV1MT4y1k7wZ?p=1</a></p>
+<h4 id="mybatis-plus"><a href="#mybatis-plus" class="headerlink" title="mybatis plus"></a>mybatis plus</h4><p>MP</p>
+<p>报错java.lang.NoSuchFieldError：com.sun.tools.javac.tree.JCTree$JCImport</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Changxing_J/article/details/134730400">https://blog.csdn.net/Changxing_J/article/details/134730400</a> 解决</p>
+<p>testSave 将数据库id改为bigInt类型就可以了</p>
+<p>[提示需要填id的可以试试将数据库id字段设置为bigint类型]{.mark}</p>
+<p>[两个冒号表示方法引用，就是直接调用了User里面的方法]{.mark}</p>
+<p>@Data注解不生效 需要使用时需要下载lombok 插件</p>
+<p>idea点击settings</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/DGH2430284817/article/details/124039024">https://blog.csdn.net/DGH2430284817/article/details/124039024</a></p>
+<p>但是下载了还是没解决 依赖的版本换成30结尾</p>
+<p>&lt;dependency&gt;</p>
+<p>&lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;</p>
+<p>&lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;</p>
+<p>&lt;version&gt;1.18.30</p>
+<p>&lt;&#x2F;version&gt;</p>
+<p>&lt;&#x2F;dependency&gt;</p>
+<p>查询投影，也就是可以查询自定义某干个属性</p>
+<p><img src="/liyu1989.github.io/./media/image46.png">{width&#x3D;”5.7652777777777775in”<br>height&#x3D;”2.8847222222222224in”}</p>
+<p>映射 解决名字不相同</p>
+<p><img src="/liyu1989.github.io/./media/image47.png">{width&#x3D;”5.7625in” height&#x3D;”2.921527777777778in”}</p>
+<p>映射表名</p>
+<p><img src="/liyu1989.github.io/./media/image48.png">{width&#x3D;”5.7625in” height&#x3D;”3.298611111111111in”}</p>
+<p>字段下划线，对象驼峰的有那个自动映射开关，要在yml里面开启</p>
+<p>mysql那边id自动递增要选上，不然会报错</p>
+<p>全局配置xml 文件里面</p>
+<p><img src="/liyu1989.github.io/./media/image49.png">{width&#x3D;”4.770833333333333in”<br>height&#x3D;”2.1770833333333335in”}</p>
+<p>把redis的基础学完</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lilylianyu.github.io/liyu1989.github.io">霉</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lilylianyu.github.io/liyu1989.github.io/post/1.html">https://lilylianyu.github.io/liyu1989.github.io/post/1.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lilylianyu.github.io/liyu1989.github.io" target="_blank">羽霉</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/liyu1989.github.io/img/facivon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/liyu1989.github.io/post/64642.html" title="xiaoxiao"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">xiaoxiao</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/liyu1989.github.io/img/facivon.png" onerror="this.onerror=null;this.src='/liyu1989.github.io/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">霉</div><div class="author-info__description">不合理的交换也未尝不可</div></div><div class="card-info-data site-data is-center"><a href="/liyu1989.github.io/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/liyu1989.github.io/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/liyu1989.github.io/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lilylianyu"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Ctrl+D 收藏本站吧 欢迎评论探讨哦！<div class="xpand" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div></div><script src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/twopeople1.js"></script><script src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/zdog.dist.js"></script><script id="rendered-js" src="https://fastly.jsdelivr.net/gh/xiaopengand/blogCdn@latest/xzxr/twopeople.js"></script><style>.card-widget.card-announcement {
+margin: 0;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+canvas {
+display: block;
+margin: 0 auto;
+cursor: move;
+}</style></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%85%A5"><span class="toc-number">1.</span> <span class="toc-text">依赖自动注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Aop-%E5%9C%A8%E4%B8%8D%E6%83%8A%E5%8A%A8%E5%8E%9F%E5%A7%8B%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A%E4%B8%BA%E5%85%B6%E8%BF%9B%E8%A1%8C%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%BC%BA"><span class="toc-number">2.</span> <span class="toc-text">Aop 在不惊动原始设计的基础上为其进行功能增强</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">异常处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">拦截器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mybatis-plus"><span class="toc-number">5.</span> <span class="toc-text">mybatis plus</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/liyu1989.github.io/post/1.html" title="ssmB站黑马学习笔记">ssmB站黑马学习笔记</a><time datetime="2024-04-28T13:09:39.075Z" title="发表于 2024-04-28 21:09:39">2024-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/liyu1989.github.io/post/64642.html" title="xiaoxiao">xiaoxiao</a><time datetime="2023-11-24T15:43:58.723Z" title="发表于 2023-11-24 23:43:58">2023-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/liyu1989.github.io/post/9521.html" title="java日期类">java日期类</a><time datetime="2023-10-20T01:39:51.000Z" title="发表于 2023-10-20 09:39:51">2023-10-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/liyu1989.github.io/post/48798.html" title="Sat Oct 14 2023 08:00:00 GMT+0800 (中国标准时间)">Sat Oct 14 2023 08:00:00 GMT+0800 (中国标准时间)</a><time datetime="2023-10-14T04:35:47.000Z" title="发表于 2023-10-14 12:35:47">2023-10-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/liyu1989.github.io/post/58856.html" title="无题">无题</a><time datetime="2023-10-14T04:28:48.000Z" title="发表于 2023-10-14 12:28:48">2023-10-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 霉</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"></a><svg width="25" height="25" viewBox="0 0 1024 1024"></svg><use id="modeicon" xlink:href="#icon-moon"></use></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/liyu1989.github.io/js/utils.js"></script><script src="/liyu1989.github.io/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo-api-zeta-gules.vercel.app/',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo-api-zeta-gules.vercel.app/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><canvas id="universe"></canvas> <script defer src="/js/universe.js"></script> <script src="/js/sun_moon.js" async></script> <script async src="//at.alicdn.com/t/font_2264842_3izu8i5eoc2.js"></script> <script src="/js/jquery-3.6.1.js"></script> <script src="/js/foot.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/liyu1989.github.io/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://npm.elemecdn.com/hexo-butterfly-clock/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'https://restapi.amap.com/v3/ip?key=1ec5d2ae8b7bcadc2c108778a0fb96b8';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="http://txt.go.sohu.com/ip/soip"></script><script data-pjax src="https://npm.elemecdn.com/hexo-butterfly-clock/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>
